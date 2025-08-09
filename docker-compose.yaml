@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  server:
+    image: networkstatic/iperf3
+    command: ["-s"]
+    container_name: iperf3-server
+    networks:
+      - testnet
+
+  client:
+    image: networkstatic/iperf3
+    container_name: iperf3-client
+    depends_on:
+      - server
+    entrypoint: ["sleep", "infinity"]
+    tty: true
+    networks:
+      - testnet
+
+networks:
+  testnet:
+    driver: bridge
